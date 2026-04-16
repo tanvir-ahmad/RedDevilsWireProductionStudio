@@ -80,26 +80,27 @@ class ProductionSection extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 16),
-          ElevatedButton.icon(
-            onPressed: (isAnyProcessing || !isVoiceReady)
-                ? null 
-                : () => StudioViewModel(ref).bakeVideo(),
-            icon: isBaking 
-              ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-              : const Icon(Icons.movie_creation, size: 28),
-            label: Text(
-              isBaking ? 'BAKING VIDEO...' : 'BAKE FINAL VIDEO',
-              style: const TextStyle(fontSize: 16, letterSpacing: 1.2),
-            ),
+          ElevatedButton(
+            onPressed: null,
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFDA291C),
-              foregroundColor: Colors.white,
+              backgroundColor: Colors.white10,
               disabledBackgroundColor: Colors.white10,
               disabledForegroundColor: Colors.white24,
               minimumSize: const Size.fromHeight(60),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
+            ),
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.block, size: 28),
+                SizedBox(width: 12),
+                Text(
+                  'VIDEO PRODUCTION DISABLED',
+                  style: TextStyle(fontSize: 16, letterSpacing: 1.2),
+                ),
+              ],
             ),
           ),
         ],

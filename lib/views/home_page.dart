@@ -3,7 +3,6 @@ import 'sections/header_section.dart';
 import 'sections/input_section.dart';
 import 'sections/process_section.dart';
 import 'sections/voice_section.dart';
-import 'sections/production_section.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -43,11 +42,6 @@ class HomePage extends StatelessWidget {
                           const Expanded(
                             flex: 1,
                             child: VoiceSection(),
-                          ),
-                          SizedBox(height: isShortScreen ? 12 : 16),
-                          const Expanded(
-                            flex: 1,
-                            child: ProductionSection(),
                           ),
                         ],
                       ),
