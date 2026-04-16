@@ -363,15 +363,6 @@ def create_video_with_text(audio_path, visual_segments, word_timings, output_pat
     final_video = concatenate_videoclips(clips, method="compose").with_audio(audio)
     final_video.write_videofile(output_path, codec="libx264", audio_codec="aac", fps=24, threads=4)
 
-    if not clips:
-        # Fallback if logic fails
-        img_path = "assets/fallback.jpg"
-        generate_text_image("PRODUCTION STUDIO", img_path)
-        clips.append(ImageClip(img_path).with_duration(audio.duration).with_fps(24))
-
-    final_video = concatenate_videoclips(clips, method="compose").with_audio(audio)
-    final_video.write_videofile(output_path, codec="libx264", audio_codec="aac", fps=24, threads=4)
-
 async def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--text", type=str)
