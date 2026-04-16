@@ -52,3 +52,4 @@ app.*.map.json
 news_input.txt
 assets/seg_*.jpg
 assets/fallback.jpg
+.env
