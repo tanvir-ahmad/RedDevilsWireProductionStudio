@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../viewmodels/studio_viewmodel.dart';
+import '../../models/app_state.dart';
 
 class ProductionSection extends ConsumerWidget {
   const ProductionSection({super.key});
@@ -8,6 +9,11 @@ class ProductionSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final logs = ref.watch(productionLogsProvider);
+
+    final status = ref.watch(studioStatusProvider);
+    final isBaking = status == StudioStatus.baking;
+    final isAnyProcessing = status != StudioStatus.idle;
+    final isVoiceReady = ref.watch(voiceoverReadyProvider);
 
     return Container(
       padding: const EdgeInsets.all(24),
@@ -74,27 +80,26 @@ class ProductionSection extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: null,
+          ElevatedButton.icon(
+            onPressed: (isAnyProcessing || !isVoiceReady)
+                ? null 
+                : () => StudioViewModel(ref).bakeVideo(),
+            icon: isBaking 
+              ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+              : const Icon(Icons.movie_creation, size: 28),
+            label: Text(
+              isBaking ? 'BAKING VIDEO...' : 'BAKE FINAL VIDEO',
+              style: const TextStyle(fontSize: 16, letterSpacing: 1.2),
+            ),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white10,
+              backgroundColor: const Color(0xFFDA291C),
+              foregroundColor: Colors.white,
               disabledBackgroundColor: Colors.white10,
               disabledForegroundColor: Colors.white24,
               minimumSize: const Size.fromHeight(60),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-            ),
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.block, size: 28),
-                SizedBox(width: 12),
-                Text(
-                  'VIDEO PRODUCTION DISABLED',
-                  style: TextStyle(fontSize: 16, letterSpacing: 1.2),
-                ),
-              ],
             ),
           ),
         ],

@@ -47,3 +47,8 @@ app.*.map.json
 # Media files
 *.mp4
 *.mp3
+
+# Temporary & Generated Assets
+news_input.txt
+assets/seg_*.jpg
+assets/fallback.jpg
