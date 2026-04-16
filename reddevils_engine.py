@@ -83,9 +83,15 @@ def generate_metadata(script, channel_name, provider="gemini", api_key=None):
     """Generates SEO metadata focused on the specific channel branding."""
     print(f"Generating SEO metadata for {channel_name}...")
     prompt = (
-        f"Based on this YouTube script for the channel '{channel_name}': {script}, suggest 3 catchy titles, a SEO description, 10 keywords, and 10 hashtags. "
-        "RETURN AS A CLEAN JSON OBJECT WITH KEYS: titles (list), description (string), keywords (list), hashtags (list). "
-        "IMPORTANT: NO trailing commas. Escape newlines as \\n. No conversational filler."
+        f"Analyze this YouTube production script for the channel '{channel_name}': {script}\n\n"
+        "The script contains multiple sports news stories. Your task is to generate professional SEO metadata for a COMPILATION video.\n\n"
+        "REQUIREMENTS for Titles:\n"
+        "- Suggest 3 catchy, high-CTR titles.\n"
+        "- CRITICAL: Each title MUST be a collective headline that encompasses the major points of ALL stories mentioned in the script. Do not focus on just one story.\n"
+        "- Use professional sports anchor terminology.\n\n"
+        "REQUIREMENTS for JSON:\n"
+        "- RETURN AS A CLEAN JSON OBJECT WITH KEYS: titles (list), description (string), keywords (list), hashtags (list), image_suggestions (string - comma separated names/entities in order of appearance).\n"
+        "- IMPORTANT: NO trailing commas. Escape newlines as \\n. No conversational filler."
     )
     if provider == "gemini":
         text = get_gemini_response(prompt, api_key)
@@ -150,7 +156,8 @@ def _robust_json_parse(text):
             "titles": get_val("titles", [], True),
             "description": get_val("description", f"RECOVERY MODE: JSON syntax error detected.\n{text}"),
             "keywords": get_val("keywords", [], True),
-            "hashtags": get_val("hashtags", [], True)
+            "hashtags": get_val("hashtags", [], True),
+            "image_suggestions": get_val("image_suggestions", "")
         }
     }
 

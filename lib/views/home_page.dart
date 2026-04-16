@@ -3,6 +3,7 @@ import 'sections/header_section.dart';
 import 'sections/input_section.dart';
 import 'sections/process_section.dart';
 import 'sections/voice_section.dart';
+import 'sections/voice_section.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

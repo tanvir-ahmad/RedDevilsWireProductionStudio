@@ -31,6 +31,7 @@ class _ProcessSectionState extends ConsumerState<ProcessSection> {
   Widget build(BuildContext context) {
     final status = ref.watch(studioStatusProvider);
     final script = ref.watch(finalScriptProvider);
+    final optimization = ref.watch(optimizationProvider);
     
     // Update controller text if it's different (e.g., script newly generated)
     if (_scriptController.text != script) {
@@ -81,9 +82,38 @@ class _ProcessSectionState extends ConsumerState<ProcessSection> {
                       tooltip: 'Regenerate',
                     ) : null),
               ),
-              style: const TextStyle(height: 1.5, fontSize: 14, fontFamily: 'Courier'),
             ),
           ),
+          if (script.isNotEmpty) ...[
+            const SizedBox(height: 16),
+            Text(
+              'IMAGE SUGGESTIONS',
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.5,
+                color: Colors.white54,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.03),
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.white10),
+              ),
+              child: Text(
+                optimization.imageSuggestions.isEmpty
+                    ? 'No suggestions found or extracting...'
+                    : optimization.imageSuggestions,
+                style: const TextStyle(
+                  color: Colors.white70,
+                  fontSize: 13,
+                  height: 1.4,
+                ),
+              ),
+            ),
+          ],
           const SizedBox(height: 16),
           if (script.isNotEmpty)
             Padding(

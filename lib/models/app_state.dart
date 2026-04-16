@@ -28,12 +28,14 @@ class OptimizationData {
   final String description;
   final List<String> keywords;
   final List<String> hashtags;
+  final String imageSuggestions;
 
   OptimizationData({
     required this.titles,
     required this.description,
     required this.keywords,
     required this.hashtags,
+    required this.imageSuggestions,
   });
 
   factory OptimizationData.fromJson(Map<String, dynamic> json) {
@@ -49,11 +51,18 @@ class OptimizationData {
       description: json['description']?.toString() ?? "",
       keywords: parseList(json['keywords']),
       hashtags: parseList(json['hashtags']),
+      imageSuggestions: json['image_suggestions']?.toString() ?? "",
     );
   }
 
   factory OptimizationData.empty() {
-    return OptimizationData(titles: [], description: "", keywords: [], hashtags: []);
+    return OptimizationData(
+      titles: [],
+      description: "",
+      keywords: [],
+      hashtags: [],
+      imageSuggestions: "",
+    );
   }
 
   bool get isEmpty => titles.isEmpty && description.isEmpty;
